@@ -270,5 +270,39 @@ document.addEventListener('DOMContentLoaded', async function() {
 }
 </style>
 
+
+<style>
+/* SYNC_BADGE_FIX2 — inline pill beside Export Log (fallback: top-right pill) */
+#n8n-sync-status{
+  position:fixed !important; top:8px !important; right:16px !important; left:auto !important;
+  width:auto !important; max-width:44vw !important; padding:5px 14px !important;
+  font-size:11px !important; line-height:1.2 !important; border-radius:999px !important;
+  box-shadow:0 3px 10px rgba(0,0,0,.22) !important; white-space:nowrap !important; z-index:100000 !important;
+}
+#n8n-sync-status.in-toolbar{
+  position:static !important; top:auto !important; right:auto !important; left:auto !important;
+  display:inline-flex !important; align-items:center !important; vertical-align:middle !important;
+  margin:0 10px 0 0 !important; box-shadow:none !important; z-index:auto !important; max-width:none !important;
+}
+</style>
+<script>
+/* SYNC_BADGE_FIX2 */
+(function(){
+  function place(){
+    var el=document.getElementById('n8n-sync-status'); if(!el) return;
+    var exp=[].slice.call(document.querySelectorAll('button,a')).find(function(b){return /export\s*log/i.test(b.textContent);});
+    if(exp && exp.parentNode){
+      if(el.parentNode!==exp.parentNode || el.nextSibling!==exp) exp.parentNode.insertBefore(el, exp);
+      el.classList.add('in-toolbar');
+    } else {
+      el.classList.remove('in-toolbar');
+    }
+  }
+  if(document.readyState==='loading') window.addEventListener('DOMContentLoaded',function(){setTimeout(place,500);});
+  else setTimeout(place,500);
+  setInterval(place, 3000);
+})();
+</script>
+
 </body>
 </html>
