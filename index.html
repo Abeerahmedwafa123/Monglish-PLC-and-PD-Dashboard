@@ -246,5 +246,29 @@ document.addEventListener('DOMContentLoaded', async function() {
 })();
 </script>
 
+
+<style>
+/* SYNC_BADGE_FIX — turn the full-width n8n sync bar into a compact top-right pill */
+#n8n-sync-status{
+  position:fixed !important;
+  top:8px !important;
+  right:16px !important;
+  left:auto !important;
+  width:auto !important;
+  max-width:44vw !important;
+  padding:5px 14px !important;
+  font-size:11px !important;
+  line-height:1.25 !important;
+  border-radius:999px !important;
+  box-shadow:0 3px 10px rgba(0,0,0,.22) !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  z-index:100000 !important;
+  opacity:.96 !important;
+}
+</style>
+
 </body>
 </html>
