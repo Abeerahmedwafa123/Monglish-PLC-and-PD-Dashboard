@@ -215,5 +215,36 @@ document.addEventListener('DOMContentLoaded', async function() {
 })();
 </script>
 
+
+<script>
+/* GAP_FILTER_SELECT_FIX */
+(function(){
+  function wrapPreserve(fnName, selId){
+    if(typeof window[fnName]!=='function') return;
+    var orig=window[fnName];
+    window[fnName]=function(){
+      var sel=document.getElementById(selId);
+      var prev=sel?sel.value:'';
+      var r=orig.apply(this,arguments);
+      try{
+        sel=document.getElementById(selId);
+        if(sel && prev){
+          var ok=Array.prototype.some.call(sel.options,function(o){return o.value===prev||o.textContent===prev;});
+          if(ok) sel.value=prev;
+        }
+      }catch(e){}
+      return r;
+    };
+  }
+  function apply(){
+    wrapPreserve('renderGapAnalysis','gap-filter-teacher');
+    wrapPreserve('renderTrendChart','trend-teacher');
+    wrapPreserve('renderTriangulation','tri-teacher');
+  }
+  if(document.readyState==='loading') window.addEventListener('DOMContentLoaded',function(){setTimeout(apply,300);});
+  else setTimeout(apply,300);
+})();
+</script>
+
 </body>
 </html>
